@@ -1,4 +1,3 @@
-
 class Edge:
 
     def __init__(self, out_vertex, in_vertex, label):
@@ -7,4 +6,4 @@ class Edge:
         self.label = label
 
     def __str__(self):
-        return f"""{self.out_vertex}, {self.label}, {self.in_vertex}"""
+        return f"""{self.out_vertex}, {self.in_vertex}, {self.label}; """
