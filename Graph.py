@@ -39,15 +39,54 @@ class Graph:
                 g.edge(str(i), str(j.in_vertex), label=j.label)
         return g
 
+    # @staticmethod
+    # def if_input_is_valid(input_data):
+    #     S = input_data.replace('\n', '\n ')
+    #     S = S.split(' ')
+    #     print(S)
+    #
+    #     i = 0
+    #     S1 = []
+    #     S2 = []
+    #     while True:
+    #         S1.append(S[i])
+    #         if S[i][-1] == '\n':
+    #             i += 1
+    #             break
+    #         i += 1
+    #     while i < len(S):
+    #         S2.append(S[i])
+    #         i += 1
+    #
+    #     flag = True
+    #     nline_count = 0
+    #     if len(S) % 4 != 0:
+    #         return False
+    #     for i in range(len(S)):
+    #         if S[i][-1] == '\n':
+    #             nline_count+=1
+    #         if nline_count>1:
+    #             return False
+    #
+    #         if (i+1)%4!=0 and S[i][-1] != ',':
+    #             flag = False
+    #             break
+    #         if (i+1)%4==0 and i<len(S)-1 and S[i][-2:] != ";\n":
+    #             flag = False
+    #             break
+    #     return flag
+
     @staticmethod  # input_data "index, label| index1, index2, label_e;"
     def parse(input_data):  # return [[(vertex_index, vertex_label)],[(vertex1_index, vertex2_index, edge_label)]]
-        S = input_data.split(' ')
+        S = input_data.replace('\n', "\n ")
+        S = S.split(' ')
+        # print(S)
         i = 0
         S1 = []
         S2 = []
         while True:
             S1.append(S[i])
-            if S[i][-1] == '|':
+            if S[i][-1] == '\n':
                 i += 1
                 break
             i += 1

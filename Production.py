@@ -3,11 +3,11 @@
 #     '([(s1, out, 1, 2, 5), (ai, out, 1, 6)], [(0, A, M, in), (0, A, N, out)])]'
 
 class Production:
-    def __init__(self, left_graph, right_graph, to):
+    def __init__(self, left_graph, right_graph, attachment):
         self.operations = []
         self.left_graph = left_graph
         self.right_graph = right_graph
-        self.to = to
+        self.attachment = attachment
 
     # def parseProduction(self, productions_to_parse: str):
     #     productions_to_parse = productions_to_parse.strip()
@@ -53,17 +53,33 @@ class Production:
     def draw(self):
         self.left_graph.get_graph().view()
         self.right_graph.get_graph().view()
-        print(self.to)
+        print(self.attachment)
+
+    @staticmethod
+    def if_input_is_valid(input_data):
+        S = input_data.replace('\n', '\n ')
+        S = S.split(' ')
+        print(S)
+        flag = True
+        if len(S) % 4 != 0:
+            return False
+        for i in range(len(S)):
+            if (i + 1) % 4 != 0 and S[i][-1] != ',':
+                flag = False
+                break
+            if (i + 1) % 4 == 0 and i < len(S) - 1 and S[i][-2:] != ";\n":
+                flag = False
+                break
+        return flag
 
     @staticmethod  # input_data "label_p, label_g, label_e, direction;"
     def parse(input_data):  # return [(label_vertex_right_graph, label_vertex_rest_graph, label_edge, direction)]
-        S = input_data.split(' ')
+        S = input_data.replace('\n', ' ')
+        S = S.split(' ')
         return [(S[i][:-1], S[i + 1][:-1], S[i + 2][:-1], S[i + 3][:-1]) for i in range(0, len(S), 4)]
-
 
 # if __name__ == '__main__':
 #     Prod = Production()
 #     Prod.parseProduction(expected_format)
 #     for op in Prod.operations:
 #         print(op)
-
