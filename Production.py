@@ -9,47 +9,6 @@ class Production:
         self.right_graph = right_graph
         self.attachment = attachment
 
-    # def parseProduction(self, productions_to_parse: str):
-    #     productions_to_parse = productions_to_parse.strip()
-    #     productions_to_parse = productions_to_parse[3: -3]
-    #
-    #     operations_list = productions_to_parse.split("]), ([")
-    #
-    #     for operationStr in operations_list:
-    #         operation = ([], [])
-    #
-    #         delete_operation_str = operationStr.split("], [")[0][1: -1]
-    #         delete_operations_list = delete_operation_str.split("), (")
-    #
-    #         for single_delete in delete_operations_list:
-    #             single_delete_list = single_delete.split(", ")
-    #
-    #             label = single_delete_list[0]
-    #             direction = single_delete_list[1]
-    #             highlighted_vertices = []
-    #
-    #             for v_str in single_delete_list[2:]:
-    #                 highlighted_vertices.append(int(v_str))
-    #
-    #             operation[0].append((label, direction, highlighted_vertices))
-    #
-    #         add_operation_str = operationStr.split("], [")[1][1: -1]
-    #         add_operations_list = add_operation_str.split("), (")
-    #
-    #         for single_add in add_operations_list:
-    #             single_add_list = single_add.split(", ")
-    #
-    #             single_add_list[0] = int(single_add_list[0])
-    #
-    #             operation[1].append(tuple(single_add_list))
-    #
-    #         self.operations.append(operation)
-    #
-    # def make_production(self):
-    #     pass
-
-    # def __str__(self):
-
     def draw(self):
         # self.left_graph.get_graph().view()
         # self.right_graph.get_graph().view()

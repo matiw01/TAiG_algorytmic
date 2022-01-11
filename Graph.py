@@ -95,7 +95,7 @@ class Graph:
         S2 = []
         while True:
             if i >= len(S):
-                return [Graph.parseVertexes(S1),[]]
+                return [Graph.parseVertexes(S1), []]
             if S[i][-1] == '\n':
                 S1.append(S[i][:-1])
                 i += 1
