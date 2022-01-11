@@ -13,10 +13,6 @@ class Main:
             Graph.parse(graph)[1],
             name))
 
-    def show_graphs(self, idx):
-        if len(self.graphs) > idx >= 0:
-            self.graphs[idx].get_graph().view()
-
     def add_production(self, graph_l, name_l, graph_r, name_r, attachment):
         self.productions.append(Production(
             Graph(
