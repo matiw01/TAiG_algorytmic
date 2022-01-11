@@ -31,7 +31,7 @@ class Graph:
         return tmp
 
     def get_graph(self):
-        g = graphviz.Digraph(self.name, format='png')
+        g = graphviz.Digraph(self.name, format='svg')
         g.attr(rankdir='LR', size='10')
         for i in self.verticesDict:
             g.node(str(i), label=self.verticesDict[i].label)
