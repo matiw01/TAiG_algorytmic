@@ -175,6 +175,8 @@ def main():
     change_entry = tk.Entry(change_graph_frame, bg="#CCC", width=5)
     change_entry.insert(tk.INSERT, "0")
     change_entry.grid(row=1, column=1, padx=5, pady=5)
+    # change_label = tk.Label(change_graph_frame, text=f"out of {len(backend.graphs)-1}", bg="#222", fg="#CCC", font="Courier")
+    # change_label.grid(row=1, column=2, padx=5, pady=5)
 
         # APPLY PRODUCTION
     apply_prod_frame = tk.Frame(apply_frame, bg="#222")
