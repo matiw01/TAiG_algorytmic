@@ -16,19 +16,19 @@ def prod_input_window(backend):
     left_label = tk.Label(frame, text="Left side of the production", bg="#222", fg="#CCC", font="Courier")
     left_label.grid(row=0, column=0, pady=5)
     left_text_box = tk.Text(frame, width=80, height=6, bg="#CCC")
-    left_text_box.insert(tk.INSERT, "1, a; 2, x; 3, 2; 4, asvae| 1, 3, 3124; 1, 4, M; 2, 2, ab; 4, 2, :D; 2, 3, cds;")
+    left_text_box.insert(tk.INSERT, "1, A;")
     left_text_box.grid(row=1, column=0, padx=15, pady=10)
 
     right_label = tk.Label(frame, text="Right side of the production", bg="#222", fg="#CCC", font="Courier")
     right_label.grid(row=2, column=0, pady=5)
     right_text_box = tk.Text(frame, width=80, height=6, bg="#CCC")
-    right_text_box.insert(tk.INSERT, "1, x| 1, 1, ab;")
+    right_text_box.insert(tk.INSERT, "1, A; 2, M;\n1, 2, am;")
     right_text_box.grid(row=3, column=0, padx=10, pady=10)
 
     prod_label = tk.Label(frame, text="Transformation", bg="#222", fg="#CCC", font="Courier")
     prod_label.grid(row=4, column=0, pady=5)
     prod_text_box = tk.Text(frame, width=80, height=10, bg="#CCC")
-    prod_text_box.insert(tk.INSERT, "he, h, hi, ha; do, he, h, ha; do, he, h, do;")
+    prod_text_box.insert(tk.INSERT, "s, out, 1; A, N, s, out; M, N, -a, in;\nai, out, 1; A, I, ai, out; M, I, -c, in;")
     prod_text_box.grid(row=5, column=0, padx=10, pady=10)
 
     def add_prod():
@@ -61,7 +61,7 @@ def graph_input_window(backend):
     prod_label = tk.Label(frame, text="Graph", bg="#222", fg="#CCC", font="Courier")
     prod_label.grid(row=1, column=0, pady=5)
     graph_text_box = tk.Text(frame, width=80, height=6, bg="#CCC")
-    graph_text_box.insert(tk.INSERT, "1, a; 2, x; 3, 2; 4, asvae\n1, 3, 3124; 1, 4, M; 2, 2, ab; 4, 2, :D; 2, 3, cds;")
+    graph_text_box.insert(tk.INSERT, "1, a; 2, x; 3, 2; 4, asvae;\n1, 3, 3124; 1, 4, M; 2, 2, ab; 4, 2, :D; 2, 3, cds;")
     graph_text_box.grid(row=2, column=0, padx=10, pady=10)
 
     def add_graph():

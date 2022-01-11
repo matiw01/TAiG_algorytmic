@@ -51,8 +51,8 @@ class Production:
     # def __str__(self):
 
     def draw(self):
-        self.left_graph.get_graph().view()
-        self.right_graph.get_graph().view()
+        # self.left_graph.get_graph().view()
+        # self.right_graph.get_graph().view()
         print(self.attachment)
 
     @staticmethod
@@ -72,11 +72,29 @@ class Production:
                 break
         return flag
 
-    @staticmethod  # input_data "label_p, label_g, label_e, direction;"
-    def parse(input_data):  # return [(label_vertex_right_graph, label_vertex_rest_graph, label_edge, direction)]
-        S = input_data.replace('\n', ' ')
-        S = S.split(' ')
-        return [(S[i][:-1], S[i + 1][:-1], S[i + 2][:-1], S[i + 3][:-1]) for i in range(0, len(S), 4)]
+    # input format:
+    # """edge_label, direction, index_left; ver_right_label, ver_g_label, edge_label, direction;
+    # edge_label, direction, index_left; ver_right_label, ver_g_label, edge_label, direction;"""
+    # format after parse:
+    # [[[edge_label, direction, index_left], [ver_right_label, ver_g_label, edge_label, direction]],
+    # [[edge_label, direction, index_left], [ver_right_label, ver_g_label, edge_label, direction]]]
+    @staticmethod
+    def parse(input_data):
+        S = input_data[:-1]
+        S = S.replace('\n', ' ')
+        S = S.split('; ')
+        for i in range(len(S)):
+            S[i] = S[i].split(', ')
+        V = [[]]
+        idx = 0
+        idxV = 0
+        while idx < len(S):
+            if len(S[idx]) == 3 and idx > 0:
+                V.append([])
+                idxV += 1
+            V[idxV].append(S[idx])
+            idx += 1
+        return V
 
 # if __name__ == '__main__':
 #     Prod = Production()

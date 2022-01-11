@@ -25,7 +25,7 @@ class Main:
                 name_r),
             Production.parse(attachment)))
 
-    def show_productions(self, idx):
+    def show_production(self, idx):
         if len(self.productions) > idx >= 0:
             self.productions[idx].draw()
 
@@ -33,37 +33,49 @@ class Main:
         pass
 
 
-# S, g1, g2 oraz g3 to są przykładowe ciągi zczytane przez gui. Są one nastepnie parsowane i tworzone są
-# z nich odpowiednie struktury. Poniższy przykład jest mocno poglądowy
-
-# S = """he, h, hi, ha;
-# do, he, h, ha;
-# do, he, h, do;"""
-
-# S1 = """he, h, hi, ha;
-# do, he, h, ha;
-# do, he, h, do;"""
-#
-# print(Production.if_input_is_valid(S1))
-
-# g1 = """1, a; 2, x; 3, 2; 4, asvae
-# 1, 3, 3124; 1, 4, M; 2, 2, ab; 4, 2, :D; 2, 3, cds;"""
-# g2 = """1, x
-# 1, 1, ab;"""
-# g3 = """1, x; 2, y
-# 1, 2, ab; 2, 1, xy;"""
-
-# g4 = """1, x; 2, y
-# 1, 2, ab; 2, 1, xy;"""
-#
-# print(Graph.if_input_is_valid(g4))
-
-# M = Main()
-# M.add_graph(g1, "graf solo")
-# M.show_graphs(0)
-# M.add_production(g2, "graf lewej strony", g3, "graf prawej strony", S)
-# M.show_productions(0)
+# format wejścia transformacji osadzenia:
+# """edge_label, direction, index_left; ver_right_label, ver_g_label, edge_label, direction;
+# edge_label, direction, index_left; ver_right_label, ver_g_label, edge_label, direction;"""
+A1 = """s, out, 1; A, N, s, out; N, N, -n, in; N, N, n, in;"""
+A2 = """s, out, 1; A, N, s, out; M, N, -a, in;
+ai, out, 1; A, I, ai, out; M, I, -c, in;"""
+A3 = """am, out, 1; A, M, am, out; E, M, -b, in;"""
+A4 = """ae, out, 1; A, E, ae, out; I, E, -l, in;
+am, out, 1; A, M, am, out; I, M, c, in;"""
 
 
-# graphs[0].get_graph().view()
-# productions[0].draw()
+
+
+# S = A4.replace('\n', ' ')
+# S = S.split(';')
+# for i in range(len(S)):
+#     S[i] = S[i].split(', ')
+# print(S)
+
+g_l1 = """1, A;"""
+g_r1 = """1, A; 2, N;
+1, 2, s;"""
+g_l2 = """1, A;"""
+g_r2 = """1, A; 2, M;
+1, 2, am;"""
+g_l3 = """1, A;"""
+g_r3 = """1, A; 2, E;
+1, 2, ae;"""
+g_l4 = """1, A;"""
+g_r4 = """1, A; 2, I;
+1, 2, ai;"""
+grafs = [(g_l1,"g_l1",g_r1,"g_r1"),
+         (g_l2,"g_l2",g_r2,"g_r2"),
+         (g_l3,"g_l3",g_r3,"g_r3"),
+         (g_l4,"g_l4",g_r4,"g_r4"),
+         ]
+osadzenia = [A1,A2,A3,A4]
+M = Main()
+for i in range(len(grafs)):
+    M.add_production(grafs[i][0],grafs[i][1],grafs[i][2],grafs[i][3],osadzenia[i])
+for i in range(len(grafs)):
+    for j in range(2):
+        M.add_graph(grafs[i][j*2], grafs[i][j*2+1])
+
+for i in range(len(M.productions)):
+    M.show_production(i)

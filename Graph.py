@@ -86,7 +86,7 @@ class Graph:
                 break
         return flag
 
-    @staticmethod  # input_data "index, label| index1, index2, label_e;"
+    @staticmethod  # input_data "index, label\n index1, index2, label_e;"
     def parse(input_data):  # return [[(vertex_index, vertex_label)],[(vertex1_index, vertex2_index, edge_label)]]
         S = input_data.replace('\n', '\n ')
         S = S.split(' ')
@@ -94,10 +94,13 @@ class Graph:
         S1 = []
         S2 = []
         while True:
-            S1.append(S[i])
+            if i >= len(S):
+                return [Graph.parseVertexes(S1),[]]
             if S[i][-1] == '\n':
+                S1.append(S[i][:-1])
                 i += 1
                 break
+            S1.append(S[i])
             i += 1
         while i < len(S):
             S2.append(S[i])
