@@ -13,10 +13,6 @@ class Main:
             Graph.parse(graph)[1],
             name))
 
-    def show_graphs(self, idx):
-        if len(self.graphs) > idx >= 0:
-            self.graphs[idx].get_graph().view()
-
     def add_production(self, graph_l, name_l, graph_r, name_r, attachment):
         self.productions.append(Production(
             Graph(
@@ -50,7 +46,7 @@ class Main:
 #
 # # print(Production.if_input_is_valid(S1))
 #
-# g1 = """1, a; 2, x; 3, 2; 4, asvae
+# g1 = """1, a; 2, x; 3, 2; 4, asvae 
 # 1, 3, 3124; 1, 4, M; 2, 2, ab; 4, 2, :D; 2, 3, cds;"""
 # g2 = """1, x
 # 1, 1, ab;"""

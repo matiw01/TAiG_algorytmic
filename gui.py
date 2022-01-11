@@ -1,12 +1,13 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+from PIL import ImageTk
 
 from main import Main
 
 HEIGHT = 700
 WIDTH = 1200
 
-def prod_input_window(backend): # tu bedzie potrzebny parameter z czyms, gdzie beda magazynowane produkcje
+def prod_input_window(backend):
     window = tk.Toplevel()
     window.title("Graph rewriting - production input")
     frame = tk.Frame(window, bg="#222", width=300, height=500)
@@ -14,19 +15,19 @@ def prod_input_window(backend): # tu bedzie potrzebny parameter z czyms, gdzie b
     
     left_label = tk.Label(frame, text="Left side of the production", bg="#222", fg="#CCC", font="Courier")
     left_label.grid(row=0, column=0, pady=5)
-    left_text_box = tk.Text(frame, width=50, height=10, bg="#CCC")
+    left_text_box = tk.Text(frame, width=80, height=6, bg="#CCC")
     left_text_box.insert(tk.INSERT, "1, a; 2, x; 3, 2; 4, asvae| 1, 3, 3124; 1, 4, M; 2, 2, ab; 4, 2, :D; 2, 3, cds;")
     left_text_box.grid(row=1, column=0, padx=15, pady=10)
 
     right_label = tk.Label(frame, text="Right side of the production", bg="#222", fg="#CCC", font="Courier")
     right_label.grid(row=2, column=0, pady=5)
-    right_text_box = tk.Text(frame, width=50, height=10, bg="#CCC")
+    right_text_box = tk.Text(frame, width=80, height=6, bg="#CCC")
     right_text_box.insert(tk.INSERT, "1, x| 1, 1, ab;")
     right_text_box.grid(row=3, column=0, padx=10, pady=10)
 
     prod_label = tk.Label(frame, text="Transformation", bg="#222", fg="#CCC", font="Courier")
     prod_label.grid(row=4, column=0, pady=5)
-    prod_text_box = tk.Text(frame, width=50, height=10, bg="#CCC")
+    prod_text_box = tk.Text(frame, width=80, height=10, bg="#CCC")
     prod_text_box.insert(tk.INSERT, "he, h, hi, ha; do, he, h, ha; do, he, h, do;")
     prod_text_box.grid(row=5, column=0, padx=10, pady=10)
 
@@ -51,17 +52,17 @@ def prod_input_window(backend): # tu bedzie potrzebny parameter z czyms, gdzie b
     button.grid(row=6, column=0, pady=10)
 
 
-def graph_input_window(backend): # tu bedzie potrzebny parameter z czyms, gdzie beda magazynowane produkcje
+def graph_input_window(backend):
     window = tk.Toplevel()
     window.title("Graph rewriting - graph input")
     frame = tk.Frame(window, bg="#222")
     frame.pack(fill=tk.BOTH, expand=True)
 
     prod_label = tk.Label(frame, text="Graph", bg="#222", fg="#CCC", font="Courier")
-    prod_label.grid(row=4, column=0, pady=5)
-    graph_text_box = tk.Text(frame, width=50, height=10, bg="#CCC")
-    graph_text_box.insert(tk.INSERT, "1, a; 2, x; 3, 2; 4, asvae| 1, 3, 3124; 1, 4, M; 2, 2, ab; 4, 2, :D; 2, 3, cds;")
-    graph_text_box.grid(row=5, column=0, padx=10, pady=10)
+    prod_label.grid(row=1, column=0, pady=5)
+    graph_text_box = tk.Text(frame, width=80, height=6, bg="#CCC")
+    graph_text_box.insert(tk.INSERT, "1, a; 2, x; 3, 2; 4, asvae\n1, 3, 3124; 1, 4, M; 2, 2, ab; 4, 2, :D; 2, 3, cds;")
+    graph_text_box.grid(row=2, column=0, padx=10, pady=10)
 
     def add_graph():
         # walidacja
@@ -83,17 +84,43 @@ def graph_input_window(backend): # tu bedzie potrzebny parameter z czyms, gdzie 
     button.grid(row=6, column=0, pady=10)
 
 def production_listing_frame(prod_list_frame):
-    # TODO
+    # TODO listowanie produkcji
 
     return
 
 def show_graph(show_graph_frame, backend, number):
+    global current_graph
+    current_graph = number
+    
+    if number < len(backend.graphs): 
+        graph = backend.graphs[number]
+        current_graph = number
+    else: return
 
+    graph_data = graph.get_graph()
+    img = ImageTk.PhotoImage(data=graph_data)
 
-    return
+    for widget in show_graph_frame.winfo_children():
+        widget.destroy()
 
+    label = tk.Label(show_graph_frame, image=img, bg="#CCC")
+    label.photo = img
+    label.pack(fill=tk.BOTH, expand=True)
+
+def apply_production(show_graph_frame, backend, prod_num, verticies):
+    global current_graph
+    graph = backend.show_graph(current_graph)
+
+    if prod_num < len(backend.productions):
+        production = backend.productions[prod_num]
+    else: return
+
+    backend.use_production(production, graph, verticies)
+    show_graph(show_graph_frame, backend, current_graph)
 
 # MAIN WINDOW
+current_graph = 0
+
 def main():
     # API FOR BACKEND
     backend = Main()
@@ -102,7 +129,7 @@ def main():
     main_window = tk.Tk()
     main_window.title("Graph rewriting - main window")
 
-    graph_frame = tk.Frame(main_window, height=HEIGHT, width=2*WIDTH/3)
+    graph_frame = tk.Frame(main_window, height=HEIGHT, width=2*WIDTH/3, bg="#CCC")
     graph_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
     graph_frame.propagate(0)
 
@@ -143,10 +170,11 @@ def main():
     prod_label.grid(row=0, column=0, columnspan=3, pady=5)
     
     change_button = ttk.Button(change_graph_frame, text="Change to", width=10, style="my.TButton", 
-        command=lambda: show_graph_frame(show_graph_frame, backend, int(entry_prod.get())))
+        command=lambda: show_graph(show_graph_frame, backend, int(change_entry.get())))
     change_button.grid(row=1, column=0, padx=5, pady=5)
-    entry_prod = tk.Entry(change_graph_frame, bg="#CCC", width=5)
-    entry_prod.grid(row=1, column=1, padx=5, pady=5)
+    change_entry = tk.Entry(change_graph_frame, bg="#CCC", width=5)
+    change_entry.insert(tk.INSERT, "0")
+    change_entry.grid(row=1, column=1, padx=5, pady=5)
 
         # APPLY PRODUCTION
     apply_prod_frame = tk.Frame(apply_frame, bg="#222")
@@ -156,7 +184,8 @@ def main():
     prod_label = tk.Label(apply_prod_frame, text="Apply production", bg="#222", fg="#CCC", font="Courier")
     prod_label.grid(row=0, column=0, columnspan=3, pady=5)
 
-    apply_button = ttk.Button(apply_prod_frame, text="Apply", width=5, style="my.TButton" )
+    apply_button = ttk.Button(apply_prod_frame, text="Apply", width=5, style="my.TButton", 
+        command=lambda: apply_production(show_graph_frame, backend, int(entry_prod.get()), [int(x) for x in entry_graph.get().split(" ")]))
     apply_button.grid(row=1, column=0, padx=5, pady=5) 
 
     entry_prod = tk.Entry(apply_prod_frame, bg="#CCC", width=5)

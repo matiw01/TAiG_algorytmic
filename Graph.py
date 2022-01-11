@@ -31,13 +31,13 @@ class Graph:
         return tmp
 
     def get_graph(self):
-        g = graphviz.Digraph(self.name, format='svg')
-        g.attr(rankdir='LR', size='10')
+        g = graphviz.Digraph(self.name, format='png')
+        g.attr(rankdir='LR', size='10', bgcolor="#CCCCCC")
         for i in self.verticesDict:
             g.node(str(i), label=self.verticesDict[i].label)
             for j in self.verticesDict[i].out_edges:
                 g.edge(str(i), str(j.in_vertex), label=j.label)
-        return g
+        return g.pipe(format='png')
 
     # @staticmethod
     # def if_input_is_valid(input_data):
