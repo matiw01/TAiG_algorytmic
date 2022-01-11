@@ -14,7 +14,7 @@ class Main:
             name))
 
     def show_graphs(self, idx):
-        if len(self.graphs) > idx > 0:
+        if len(self.graphs) > idx >= 0:
             self.graphs[idx].get_graph().view()
 
     def add_production(self, graph_l, name_l, graph_r, name_r, attachment):
@@ -30,7 +30,7 @@ class Main:
             Production.parse(attachment)))
 
     def show_productions(self, idx):
-        if len(self.productions) > idx > 0:
+        if len(self.productions) > idx >= 0:
             self.productions[idx].draw()
 
     def use_production(self, production, graph, pointed_vertexes):
@@ -59,9 +59,9 @@ class Main:
 #
 # M = Main()
 # M.add_graph(g1, "graf solo")
-# # M.show_graphs()
+# M.show_graphs(0)
 # M.add_production(g2, "graf lewej strony", g3, "graf prawej strony", S)
-# # M.show_productions()
+# M.show_productions(0)
 
 
 # graphs[0].get_graph().view()
