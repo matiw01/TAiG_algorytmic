@@ -1,0 +1,7 @@
+digraph "graf prawej strony" {
+	rankdir=LR size=10
+	1 [label=x]
+	1 -> 2 [label=ab]
+	2 [label=y]
+	2 -> 1 [label=xy]
+}

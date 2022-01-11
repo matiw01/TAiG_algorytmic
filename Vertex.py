@@ -1,8 +1,6 @@
-
-
 class Vertex:
 
-    def __init__(self, idx, label, out_edges = None, in_edges = None):
+    def __init__(self, idx, label, out_edges=None, in_edges=None):
         self.idx = idx
         self.label = label
         if out_edges is None:
@@ -11,7 +9,6 @@ class Vertex:
         if in_edges is None:
             in_edges = []
         self.in_edges = in_edges
-
 
     def __str__(self):
         str_out_edges = ""

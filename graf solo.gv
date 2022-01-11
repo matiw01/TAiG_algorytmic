@@ -1,0 +1,12 @@
+digraph "graf solo" {
+	rankdir=LR size=10
+	1 [label=a]
+	1 -> 3 [label=3124]
+	1 -> 4 [label=M]
+	2 [label=x]
+	2 -> 2 [label=ab]
+	2 -> 3 [label=cds]
+	3 [label=2]
+	4 [label=asvae]
+	4 -> 2 [label=":D"]
+}

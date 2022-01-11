@@ -30,6 +30,7 @@ def prod_input_window(): # tu bedzie potrzebny parameter z czyms, gdzie beda mag
     button.grid(row=6, column=0, pady=5)
 
 
+
 def graph_input_window():
     window = tk.Toplevel()
     window.title("Graph rewriting - graph input")
