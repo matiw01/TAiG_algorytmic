@@ -4,8 +4,8 @@ from Production import Production
 
 class Main:
     def __init__(self):
-        self.graphs = []
-        self.productions = []
+        self.graphs: list(Graph) = []
+        self.productions: list(Graph) = []
 
     def add_graph(self, graph: str, name: str):
         self.graphs.append(Graph(
@@ -30,7 +30,80 @@ class Main:
             self.productions[idx].draw()
 
     def use_production(self, production: Production, graph: Graph, pointed_vertexes: list[int]):
-        pass
+        
+        left_side_to_graph_vertex_id_map = dict()
+        for i in range(0,len(pointed_vertexes),2):
+            left_side_to_graph_vertex_id_map[pointed_vertexes[i]]=pointed_vertexes[i+1]
+
+        right_side_to_graph_vertex_id_map = dict()
+        indexes_of_vertices_from_right_side_in_graph = set()
+        
+        next_idx = max(graph.verticesDict.keys()) + 1
+
+        for idx in production.right_graph.verticesDict:
+            if idx in production.left_graph.verticesDict:
+                right_side_to_graph_vertex_id_map[idx] = left_side_to_graph_vertex_id_map[idx]
+                indexes_of_vertices_from_right_side_in_graph.add(left_side_to_graph_vertex_id_map[idx])
+
+        #usuwanie wierzchołków, których nie ma w prawej stronie
+        for idx in production.left_graph.verticesDict:
+            if not idx in production.right_graph.verticesDict:
+                graph.remove_vertex(left_side_to_graph_vertex_id_map[idx])
+
+        
+        #dodawanie wierzchołków, których nie ma w lewej stronie
+        for idx in production.right_graph.verticesDict:
+            if not idx in production.left_graph.verticesDict:
+                new_idx=next_idx
+                next_idx+=1
+                right_side_to_graph_vertex_id_map[idx]=new_idx
+                indexes_of_vertices_from_right_side_in_graph.add(new_idx)
+                vertex=Vertex(new_idx,production.right_graph.verticesDict[idx].label)
+                graph.add_vertex(vertex)
+        
+        left_side_edges = [edge for edge in vertex.in_edges for vertex in production.left_graph.verticesDict.values()]
+        right_side_edges = [edge for edge in vertex.in_edges for vertex in production.right_graph.verticesDict.values()]
+        
+        #usuwanie krawędzi występujących w lewej stronie
+        for edge in left_side_edges:
+            g_edge=Edge(left_side_to_graph_vertex_id_map[edge.out_vertex],left_side_to_graph_vertex_id_map[edge.in_vertex],edge.label)
+            graph.remove_edge(g_edge)
+
+        #dodawanie krawędzi występujących w prawej stronie
+        for edge in left_side_edges:
+            g_edge=Edge(right_side_to_graph_vertex_id_map[edge.out_vertex],right_side_to_graph_vertex_id_map[edge.in_vertex],edge.label)
+            graph.add_edge(g_edge)
+
+
+        # wykonywanie operacji dodawania
+        for operation in production.operations:
+            
+            graph_in_idx = left_side_to_graph_vertex_id_map[operation[0][2]]
+            direction = operation[0][1]
+            label = operation[0][0]
+
+            added_edges=operation[1:]
+
+            left_side_to_graph_edges_to_process = graph.verticesDict[graph_in_idx].in_edges if direction == 'in' else graph.verticesDict[graph_in_idx].out_edges
+            
+            for processed_edge in left_side_to_graph_edges_to_process:
+                if processed_edge.label != label:
+                    continue
+                graph.remove_edge(processed_edge)
+            
+                for added_edge in added_edges:
+
+                    right_vertices=[right_side_to_graph_vertex_id_map[i] for i in production.right_graph.labelDict[added_edge[0]]]
+                    graph_vertices=[i for i in graph.labelDict[added_edge[1]] if i not in indexes_of_vertices_from_right_side_in_graph]
+
+                    #add edges between all matching vertices
+                    for right_vertex_id in right_vertices:
+                        for graph_vertex_id in graph_vertices:
+                            
+                            if added_edge[3] == 'in':
+                                graph.add_edge(Edge(right_vertex_id,graph_in_id,added_edge[2]))
+                            else:
+                                graph.add_edge(Edge(graph_vertex_id,right_vertex_id,added_edge[2]))
 
 
 # format wejścia transformacji osadzenia:
