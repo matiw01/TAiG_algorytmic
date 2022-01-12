@@ -6,7 +6,7 @@ import graphviz
 # assuming matrixGraph is matrix where each row is list of outgoing edges and collumn is list of  ingoing edges
 # and labels is list of labels so labels[i] is label for vertex created of matrixGraph[i]
 class Graph:
-    def __init__(self, vertices, edges, name):
+    def __init__(self, vertices: list((int,str)), edges: list((int,int,str)), name: str):
         self.name = name
         self.previous_data = [vertices, edges]
         self.create(self, vertices, edges)
@@ -15,7 +15,7 @@ class Graph:
         self.create(self, self.previous_data[0], self.previous_data[1])
 
     @staticmethod
-    def create(self, vertices, edges):
+    def create(self, vertices: list((int,str)), edges: list((int,int,str))):
         self.verticesDict = {}
         self.labelDict = {}
         for idx, label in vertices:
@@ -47,7 +47,7 @@ class Graph:
         return g.pipe(format='png')
 
     @staticmethod
-    def if_input_is_valid(input_data):
+    def if_input_is_valid(input_data: str) -> bool:
         if "\n" not in input_data:
             return False
         S = input_data.replace('\n', '\n ')
@@ -94,7 +94,7 @@ class Graph:
         return flag
 
     @staticmethod  # input_data "index, label\n index1, index2, label_e;"
-    def parse(input_data):  # return [[(vertex_index, vertex_label)],[(vertex1_index, vertex2_index, edge_label)]]
+    def parse(input_data: str) -> [list((int,str)),list((int,int,str))]:  # return [[(vertex_index, vertex_label)],[(vertex1_index, vertex2_index, edge_label)]]
         S = input_data.replace('\n', '\n ')
         S = S.split(' ')
         i = 0
@@ -115,9 +115,9 @@ class Graph:
         return [Graph.parseVertexes(S1), Graph.parseEdges(S2)]
 
     @staticmethod  # input_data "index, label;"
-    def parseVertexes(s):  # return [(vertex_index, vertex_label)]
+    def parseVertexes(s: str) -> list((int,str)):  # return [(vertex_index, vertex_label)]
         return [(s[i][:-1], s[i + 1][:-1]) for i in range(0, len(s), 2)]
 
     @staticmethod  # input_data "index1, index2, label_e;"
-    def parseEdges(s):  # return [(vertex1_index, vertex2_index, edge_label)]
+    def parseEdges(s: str) -> list((int,int,str)):  # return [(vertex1_index, vertex2_index, edge_label)]
         return [(s[i][:-1], s[i + 1][:-1], s[i + 2][:-1]) for i in range(0, len(s), 3)]

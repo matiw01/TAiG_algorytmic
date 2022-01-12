@@ -7,13 +7,13 @@ class Main:
         self.graphs = []
         self.productions = []
 
-    def add_graph(self, graph, name):
+    def add_graph(self, graph: str, name: str):
         self.graphs.append(Graph(
             Graph.parse(graph)[0],
             Graph.parse(graph)[1],
             name))
 
-    def add_production(self, graph_l, name_l, graph_r, name_r, attachment):
+    def add_production(self, graph_l: str, name_l: str, graph_r: str, name_r: str, attachment: str):
         self.productions.append(Production(
             Graph(
                 Graph.parse(graph_l)[0],
@@ -25,11 +25,11 @@ class Main:
                 name_r),
             Production.parse(attachment)))
 
-    def show_production(self, idx):
+    def show_production(self, idx: int):
         if len(self.productions) > idx >= 0:
             self.productions[idx].draw()
 
-    def use_production(self, production, graph, pointed_vertexes):
+    def use_production(self, production: Production, graph: Graph, pointed_vertexes: list[int]):
         pass
 
 

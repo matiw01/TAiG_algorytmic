@@ -1,6 +1,7 @@
+import Edge
 class Vertex:
 
-    def __init__(self, idx, label, out_edges=None, in_edges=None):
+    def __init__(self, idx: int, label: str, out_edges=None, in_edges=None):
         self.idx = idx
         self.label = label
         if out_edges is None:
@@ -25,8 +26,8 @@ class Vertex:
         label:   {str(self.label)} 
         """
 
-    def add_out_edge(self, edge):
+    def add_out_edge(self, edge: Edge):
         self.out_edges.append(edge)
 
-    def add_in_edge(self, edge):
+    def add_in_edge(self, edge: Edge):
         self.in_edges.append(edge)

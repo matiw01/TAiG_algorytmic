@@ -13,7 +13,7 @@ class Production:
         return self.left_graph, self.right_graph
 
     @staticmethod
-    def if_input_is_valid(input_data):
+    def if_input_is_valid(input_data) -> bool:
         S = input_data.replace('\n', '\n ')
         S = S.split(' ')
         print(S)
@@ -36,7 +36,7 @@ class Production:
     # [[[edge_label, direction, index_left], [ver_right_label, ver_g_label, edge_label, direction]],
     # [[edge_label, direction, index_left], [ver_right_label, ver_g_label, edge_label, direction]]]
     @staticmethod
-    def parse(input_data):
+    def parse(input_data: str):
         S = input_data[:-1]
         S = S.replace('\n', ' ')
         S = S.split('; ')
