@@ -138,7 +138,7 @@ def show_graph(show_graph_frame, backend, number):
 
 def apply_production(show_graph_frame, backend, prod_num, verticies):
     global current_graph
-    graph = backend.show_graph(current_graph)
+    graph = backend.graphs[current_graph]
 
     if prod_num < len(backend.productions):
         production = backend.productions[prod_num]

@@ -38,7 +38,7 @@ class Main:
         right_side_to_graph_vertex_id_map = dict()
         indexes_of_vertices_from_right_side_in_graph = set()
         
-        next_idx = max(graph.verticesDict.keys()) + 1
+        next_idx = max(map(int,graph.verticesDict.keys())) + 1
 
         for idx in production.right_graph.verticesDict:
             if idx in production.left_graph.verticesDict:
@@ -54,7 +54,7 @@ class Main:
         #dodawanie wierzchołków, których nie ma w lewej stronie
         for idx in production.right_graph.verticesDict:
             if not idx in production.left_graph.verticesDict:
-                new_idx=next_idx
+                new_idx=str(next_idx)
                 next_idx+=1
                 right_side_to_graph_vertex_id_map[idx]=new_idx
                 indexes_of_vertices_from_right_side_in_graph.add(new_idx)
