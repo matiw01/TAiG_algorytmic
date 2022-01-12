@@ -7,10 +7,17 @@ import graphviz
 # and labels is list of labels so labels[i] is label for vertex created of matrixGraph[i]
 class Graph:
     def __init__(self, vertices, edges, name):
+        self.name = name
+        self.previous_data = [vertices, edges]
+        self.create(self, vertices, edges)
+
+    def undo(self):
+        self.create(self, self.previous_data[0], self.previous_data[1])
+
+    @staticmethod
+    def create(self, vertices, edges):
         self.verticesDict = {}
         self.labelDict = {}
-        self.name = name
-
         for idx, label in vertices:
             self.verticesDict[idx] = Vertex(idx, label)
             self.labelDict[label] = []
