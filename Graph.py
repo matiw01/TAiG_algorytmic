@@ -30,9 +30,9 @@ class Graph:
         tmp += str(self.labelDict)
         return tmp
 
-    def get_graph(self):
+    def get_graph(self, bg_color):
         g = graphviz.Digraph(self.name, format='png')
-        g.attr(rankdir='LR', size='10', bgcolor="#CCCCCC")
+        g.attr(rankdir='LR', size='10', bgcolor=bg_color)
         for i in self.verticesDict:
             g.node(str(i), label=self.verticesDict[i].label)
             for j in self.verticesDict[i].out_edges:

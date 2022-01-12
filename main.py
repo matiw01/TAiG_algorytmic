@@ -77,5 +77,5 @@ for i in range(len(grafs)):
     for j in range(2):
         M.add_graph(grafs[i][j*2], grafs[i][j*2+1])
 
-for i in range(len(M.productions)):
-    M.show_production(i)
+# for i in range(len(M.productions)):
+#     M.show_production(i)

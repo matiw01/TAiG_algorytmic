@@ -9,10 +9,8 @@ class Production:
         self.right_graph = right_graph
         self.attachment = attachment
 
-    def draw(self):
-        # self.left_graph.get_graph().view()
-        # self.right_graph.get_graph().view()
-        print(self.attachment)
+    def get_rl_graphs(self):
+        return self.left_graph, self.right_graph
 
     @staticmethod
     def if_input_is_valid(input_data):
