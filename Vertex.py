@@ -31,3 +31,9 @@ class Vertex:
 
     def add_in_edge(self, edge: Edge):
         self.in_edges.append(edge)
+
+    def remove_out_edge(self, edge: Edge):
+        self.out_edges.remove(edge)
+
+    def remove_in_edge(self, edge: Edge):
+        self.in_edges.remove(edge)
