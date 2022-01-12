@@ -136,3 +136,10 @@ class Graph:
     def remove_edge(self, edge):
         self.verticesDict[edge.out_vertex].remove_out_edge(edge)
         self.verticesDict[edge.in_vertex].remove_in_edge(edge)
+
+    def remove_vertex(self, vertex_id):
+        for edge in self.verticesDict[vertex_id].out_edges:
+            if edge.out_vertex == vertex_id:
+                self.verticesDict[edge.in_vertex].remove_in_edge(edge)
+            else:
+                self.verticesDict[edge.out_vertex].remove_out_edge(edge)
