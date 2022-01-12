@@ -66,12 +66,16 @@ class Main:
         
         #usuwanie krawędzi występujących w lewej stronie
         for edge in left_side_edges:
-            g_edge=Edge(left_side_to_graph_vertex_id_map[edge.out_vertex],left_side_to_graph_vertex_id_map[edge.in_vertex],edge.label)
+            g_edge=Edge(left_side_to_graph_vertex_id_map[edge.out_vertex],
+                        left_side_to_graph_vertex_id_map[edge.in_vertex],
+                        edge.label)
             graph.remove_edge(g_edge)
 
         #dodawanie krawędzi występujących w prawej stronie
-        for edge in left_side_edges:
-            g_edge=Edge(right_side_to_graph_vertex_id_map[edge.out_vertex],right_side_to_graph_vertex_id_map[edge.in_vertex],edge.label)
+        for edge in right_side_edges:
+            g_edge=Edge(right_side_to_graph_vertex_id_map[edge.out_vertex],
+                        right_side_to_graph_vertex_id_map[edge.in_vertex],
+                        edge.label)
             graph.add_edge(g_edge)
 
 
