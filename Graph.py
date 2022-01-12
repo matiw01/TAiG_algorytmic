@@ -143,3 +143,9 @@ class Graph:
                 self.verticesDict[edge.in_vertex].remove_in_edge(edge)
             else:
                 self.verticesDict[edge.out_vertex].remove_out_edge(edge)
+
+        for edge in self.verticesDict[vertex_id].in_edges:
+            if edge.out_vertex == vertex_id:
+                self.verticesDict[edge.in_vertex].remove_in_edge(edge)
+            else:
+                self.verticesDict[edge.out_vertex].remove_out_edge(edge)
