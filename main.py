@@ -1,11 +1,11 @@
 from Graph import Graph
 from Production import Production
-
+from typing import List
 
 class Main:
     def __init__(self):
-        self.graphs: list(Graph) = []
-        self.productions: list(Graph) = []
+        self.graphs = []
+        self.productions = []
 
     def add_graph(self, graph: str, name: str):
         self.graphs.append(Graph(
@@ -29,7 +29,7 @@ class Main:
         if len(self.productions) > idx >= 0:
             self.productions[idx].draw()
 
-    def use_production(self, production: Production, graph: Graph, pointed_vertexes: list[int]):
+    def use_production(self, production: Production, graph: Graph, pointed_vertexes: List[int]):
         
         left_side_to_graph_vertex_id_map = dict()
         for i in range(0,len(pointed_vertexes),2):
@@ -105,7 +105,7 @@ class Main:
                         for graph_vertex_id in graph_vertices:
                             
                             if added_edge[3] == 'in':
-                                graph.add_edge(Edge(right_vertex_id,graph_in_id,added_edge[2]))
+                                graph.add_edge(Edge(right_vertex_id,graph_vertex_id,added_edge[2]))
                             else:
                                 graph.add_edge(Edge(graph_vertex_id,right_vertex_id,added_edge[2]))
 
