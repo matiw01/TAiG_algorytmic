@@ -4,6 +4,8 @@ from PIL import ImageTk
 
 from main import Main
 
+DEFAULT_GRAPH_INPUT_STRING = "1, a; 2, x; 3, N; 4, asvae;\n1, 3, s; 1, 4, M; 2, 2, ab; 4, 2, :D; 2, 3, cds;"
+
 HEIGHT = 700
 WIDTH = 1200
 
@@ -69,7 +71,7 @@ def graph_input_window(backend):
     prod_label = tk.Label(frame, text="Graph", bg=BG_COLOR, fg=FG_COLOR, font=FONT)
     prod_label.grid(row=1, column=0, pady=5)
     graph_text_box = tk.Text(frame, width=80, height=6, bg=FG_COLOR)
-    graph_text_box.insert(tk.INSERT, "1, a; 2, x; 3, 2; 4, asvae;\n1, 3, 3124; 1, 4, M; 2, 2, ab; 4, 2, :D; 2, 3, cds;")
+    graph_text_box.insert(tk.INSERT, DEFAULT_GRAPH_INPUT_STRING)
     graph_text_box.grid(row=2, column=0, padx=10, pady=10)
 
     def add_graph():

@@ -41,7 +41,7 @@ class Graph:
         g = graphviz.Digraph(self.name, format='png')
         g.attr(rankdir='LR', size='10', bgcolor=bg_color)
         for i in self.verticesDict:
-            g.node(str(i), label=self.verticesDict[i].label)
+            g.node(str(i), label=f"{self.verticesDict[i].label},{self.verticesDict[i].idx}")
             for j in self.verticesDict[i].out_edges:
                 g.edge(str(i), str(j.in_vertex), label=j.label)
         return g.pipe(format='png')
