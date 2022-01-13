@@ -1,18 +1,12 @@
-from typing import List, Tuple
-
-import graphviz
-
-from Edge import Edge
 from Vertex import Vertex
-
-Edge_decs = Tuple[int, int, str]
-Vertex_desc = Tuple[int, str]
-
+from Edge import Edge
+import graphviz
+from typing import List,Tuple
 
 # assuming matrixGraph is matrix where each row is list of outgoing edges and collumn is list of  ingoing edges
 # and labels is list of labels so labels[i] is label for vertex created of matrixGraph[i]
 class Graph:
-    def __init__(self, vertices: List[Vertex_desc], edges: List[Edge_decs], name: str):
+    def __init__(self, vertices: List[Tuple[int, str]], edges: List[Tuple[int, int, str]], name: str):
         self.name = name
         self.previous_data = [vertices, edges]
         self.create(self, vertices, edges)
@@ -21,7 +15,7 @@ class Graph:
         self.create(self, self.previous_data[0], self.previous_data[1])
 
     @staticmethod
-    def create(self, vertices: List[Vertex_desc], edges: List[Edge_decs]):
+    def create(self, vertices: List[Tuple[int, str]], edges: List[Tuple[int, int, str]]):
         self.verticesDict = {}
         self.labelDict = {}
         for idx, label in vertices:
@@ -36,7 +30,7 @@ class Graph:
             self.verticesDict[in_vertex].add_in_edge(Edge(out_vertex, in_vertex, label))
 
     def __str__(self):
-        tmp = "vertices: "
+        tmp = "verticies: "
         for i in self.verticesDict:
             tmp += str(self.verticesDict[i])
         tmp += "labels: "
@@ -100,7 +94,7 @@ class Graph:
         return flag
 
     @staticmethod  # input_data "index, label\n index1, index2, label_e;"
-    def parse(input_data: str) -> Tuple[List[Vertex_desc], List[Edge_decs]]:
+    def parse(input_data: str) -> Tuple[List[Tuple[int, str]], List[Tuple[int, int, str]]]:  
         # return [[(vertex_index, vertex_label)],[(vertex1_index, vertex2_index, edge_label)]]
         S = input_data.replace('\n', '\n ')
         S = S.split(' ')
@@ -109,7 +103,7 @@ class Graph:
         S2 = []
         while True:
             if i >= len(S):
-                return Graph.parseVertexes(S1), []
+                return [Graph.parseVertexes(S1), []]
             if S[i][-1] == '\n':
                 S1.append(S[i][:-1])
                 i += 1
@@ -119,36 +113,37 @@ class Graph:
         while i < len(S):
             S2.append(S[i])
             i += 1
-        return Graph.parseVertexes(S1), Graph.parseEdges(S2)
+        return (Graph.parseVertexes(S1), Graph.parseEdges(S2))
 
     @staticmethod  # input_data "index, label;"
-    def parseVertexes(s: List[str]) -> List[Vertex_desc]:  # return [(vertex_index, vertex_label)]
-        return [(int(s[i][:-1]), s[i + 1][:-1]) for i in range(0, len(s), 2)]
+    def parseVertexes(s: str) -> List[Tuple[int, str]]:  # return [(vertex_index, vertex_label)]
+        return [(s[i][:-1], s[i + 1][:-1]) for i in range(0, len(s), 2)]
 
     @staticmethod  # input_data "index1, index2, label_e;"
-    def parseEdges(s: List[str]) -> List[Edge_decs]:  # return [(vertex1_index, vertex2_index, edge_label)]
-        return [(int(s[i][:-1]), int(s[i + 1][:-1]), s[i + 2][:-1]) for i in range(0, len(s), 3)]
+    def parseEdges(s: str) -> List[Tuple[int, int, str]]:  # return [(vertex1_index, vertex2_index, edge_label)]
+        return [(s[i][:-1], s[i + 1][:-1], s[i + 2][:-1]) for i in range(0, len(s), 3)]
 
-    def add_vertex(self, vertex: Vertex):
+    def add_vertex(self, vertex):
         self.verticesDict[vertex.idx] = vertex
-        if vertex.label not in self.labelDict:
+        if not vertex.label in self.labelDict:
             self.labelDict[vertex.label] = []
         self.labelDict[vertex.label].append(self.verticesDict[vertex.idx])
 
-    def add_edge(self, edge: Edge):
+    def add_edge(self, edge):
         self.verticesDict[edge.out_vertex].add_out_edge(edge)
         self.verticesDict[edge.in_vertex].add_in_edge(edge)
 
-    def remove_edge(self, edge: Edge):
+    def remove_edge(self, edge):
         self.verticesDict[edge.out_vertex].remove_out_edge(edge)
         self.verticesDict[edge.in_vertex].remove_in_edge(edge)
 
-    def remove_vertex(self, vertex_id: int):
+    def remove_vertex(self, vertex_id):
         for edge in self.verticesDict[vertex_id].out_edges:
             self.verticesDict[edge.out_vertex].remove_in_edge(edge)
-
+            
         for edge in self.verticesDict[vertex_id].in_edges:
             self.verticesDict[edge.in_vertex].remove_out_edge(edge)
-
+        
         self.labelDict[self.verticesDict[vertex_id].label].remove(vertex_id)
         del self.verticesDict[vertex_id]
+            
