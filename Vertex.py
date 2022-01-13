@@ -1,4 +1,6 @@
 from Edge import Edge
+
+
 class Vertex:
 
     def __init__(self, idx: int, label: str, out_edges=None, in_edges=None):
