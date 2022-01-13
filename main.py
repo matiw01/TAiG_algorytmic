@@ -104,19 +104,20 @@ class Main:
                 if processed_edge.label != label:
                     continue
                 graph.remove_edge(processed_edge)
-
                 for added_edge in added_edges:
 
-                    right_vertices = [right_side_to_graph_vertex_id_map[i] for i in
+                    right_vertices = [right_side_to_graph_vertex_id_map[i.idx] for i in
                                       production.right_graph.labelDict[added_edge[0]]]
-                    graph_vertices = [i for i in graph.labelDict[added_edge[1]] if
-                                      i not in indexes_of_vertices_from_right_side_in_graph]
+                    graph_vertices = [i.idx for i in graph.labelDict[added_edge[1]] if
+                                      i.idx not in indexes_of_vertices_from_right_side_in_graph]
 
+                    if len(right_vertices) == 0 or len(graph_vertices) == 0:
+                        continue
                     # add edges between all matching vertices
                     for right_vertex_id in right_vertices:
                         for graph_vertex_id in graph_vertices:
 
-                            if added_edge[3] == Direction.IN:
+                            if added_edge[3] == Direction.OUT:
                                 graph.add_edge(Edge(right_vertex_id, graph_vertex_id, added_edge[2]))
                             else:
                                 graph.add_edge(Edge(graph_vertex_id, right_vertex_id, added_edge[2]))
@@ -156,6 +157,7 @@ grafs = [(g_l1, "g_l1", g_r1, "g_r1"),
          (g_l4, "g_l4", g_r4, "g_r4"),
          ]
 osadzenia = [A1, A2, A3, A4]
+
 M = Main()
 for i in range(len(grafs)):
     M.add_production(grafs[i][0], grafs[i][1], grafs[i][2], grafs[i][3], osadzenia[i])
@@ -163,5 +165,6 @@ for i in range(len(grafs)):
     for j in range(2):
         M.add_graph(grafs[i][j * 2], grafs[i][j * 2 + 1])
 
+start_graph = M.graphs[0]
 # for i in range(len(M.productions)):
 #     M.show_production(i)
