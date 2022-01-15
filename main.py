@@ -39,6 +39,7 @@ class Main:
         left_side_to_graph_vertex_id_map = dict()
         for i in range(0, len(pointed_vertexes), 2):
             left_side_to_graph_vertex_id_map[pointed_vertexes[i]] = pointed_vertexes[i + 1]
+        indexes_of_vertices_from_left_side_in_graph = set(left_side_to_graph_vertex_id_map.values())
 
         right_side_to_graph_vertex_id_map = dict()
         indexes_of_vertices_from_right_side_in_graph = set()
@@ -67,9 +68,7 @@ class Main:
 
         left_side_edges = [edge for vertex in production.left_graph.verticesDict.values() for edge in vertex.in_edges]
         right_side_edges = [edge for vertex in production.right_graph.verticesDict.values() for edge in vertex.in_edges]
-        transformed_right_side_edges = [Edge(right_side_to_graph_vertex_id_map[edge.out_vertex],
-                                             right_side_to_graph_vertex_id_map[edge.in_vertex],
-                                             edge.label) for edge in right_side_edges]
+
 
         # usuwanie krawędzi występujących w lewej stronie
         for edge in left_side_edges:
@@ -97,11 +96,14 @@ class Main:
             left_side_to_graph_edges_to_process = graph.verticesDict[graph_in_idx].in_edges if direction == 'in' else \
                 graph.verticesDict[graph_in_idx].out_edges
             left_side_to_graph_edges_to_process = list(
-                filter(lambda x: x.label == label and x not in transformed_right_side_edges,
-                       left_side_to_graph_edges_to_process))
+                filter(lambda x: x.label == label, left_side_to_graph_edges_to_process))
+
             for processed_edge in left_side_to_graph_edges_to_process:
-                graph.remove_edge(processed_edge)
                 other_vertex_id = processed_edge.in_vertex if direction == 'out' else processed_edge.out_vertex
+                if other_vertex_id in indexes_of_vertices_from_right_side_in_graph:
+                    continue # krawędź musi być do wierzchołka z poza 'zmapowanej' lewej strony
+
+                graph.remove_edge(processed_edge)
 
                 for added_edge in added_edges:
 
