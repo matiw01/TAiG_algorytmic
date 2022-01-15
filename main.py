@@ -67,6 +67,9 @@ class Main:
 
         left_side_edges = [edge for vertex in production.left_graph.verticesDict.values() for edge in vertex.in_edges]
         right_side_edges = [edge for vertex in production.right_graph.verticesDict.values() for edge in vertex.in_edges]
+        transformed_right_side_edges = [Edge(right_side_to_graph_vertex_id_map[edge.out_vertex],
+                                             right_side_to_graph_vertex_id_map[edge.in_vertex],
+                                             edge.label) for edge in right_side_edges]
 
         # usuwanie krawędzi występujących w lewej stronie
         for edge in left_side_edges:
@@ -92,28 +95,26 @@ class Main:
             added_edges = operation[1:]
 
             left_side_to_graph_edges_to_process = graph.verticesDict[graph_in_idx].in_edges if direction == 'in' else \
-            graph.verticesDict[graph_in_idx].out_edges
+                graph.verticesDict[graph_in_idx].out_edges
             left_side_to_graph_edges_to_process = list(
-                filter(lambda x: x.label == label, left_side_to_graph_edges_to_process))
+                filter(lambda x: x.label == label and x not in transformed_right_side_edges,
+                       left_side_to_graph_edges_to_process))
             for processed_edge in left_side_to_graph_edges_to_process:
                 graph.remove_edge(processed_edge)
+                other_vertex_id = processed_edge.in_vertex if direction == 'out' else processed_edge.out_vertex
+
                 for added_edge in added_edges:
 
                     right_vertices = [right_side_to_graph_vertex_id_map[v.idx] for v in
                                       production.right_graph.labelDict[added_edge[0]]]
-                    graph_vertices = [v.idx for v in graph.labelDict[added_edge[1]] if
-                                      v.idx not in indexes_of_vertices_from_right_side_in_graph]
-
-                    if len(right_vertices) == 0 or len(graph_vertices) == 0:
+                    if graph.verticesDict[other_vertex_id].label != added_edge[1]:
                         continue
                     # add edges between all matching vertices
                     for right_vertex_id in right_vertices:
-                        for graph_vertex_id in graph_vertices:
-
-                            if added_edge[3] == 'out':
-                                graph.add_edge(Edge(right_vertex_id, graph_vertex_id, added_edge[2]))
-                            else:
-                                graph.add_edge(Edge(graph_vertex_id, right_vertex_id, added_edge[2]))
+                        if added_edge[3] == 'out':
+                            graph.add_edge(Edge(right_vertex_id, other_vertex_id, added_edge[2]))
+                        else:
+                            graph.add_edge(Edge(other_vertex_id, right_vertex_id, added_edge[2]))
 
 
 # format wejścia transformacji osadzenia:
@@ -152,13 +153,19 @@ grafs = [(g_l1, "g_l1", g_r1, "g_r1"),
 
 osadzenia = [A1, A2, A3, A4]
 
-M = Main()
-for i in range(len(grafs)):
-    M.add_production(grafs[i][0], grafs[i][1], grafs[i][2], grafs[i][3], osadzenia[i])
-for i in range(len(grafs)):
-    for j in range(2):
-        M.add_graph(grafs[i][j * 2], grafs[i][j * 2 + 1])
 
-start_graph = M.graphs[0]
-# for i in range(len(M.productions)):
-#     M.show_production(i)
+def default(M=None):
+    if M is None:
+        M = Main()
+    for i in range(len(grafs)):
+        M.add_production(grafs[i][0], grafs[i][1], grafs[i][2], grafs[i][3], osadzenia[i])
+    for i in range(len(grafs)):
+        for j in range(2):
+            M.add_graph(grafs[i][j * 2], grafs[i][j * 2 + 1])
+
+    # for i in range(len(M.productions)):
+    #     M.show_production(i)
+    return M
+
+
+M = default()
