@@ -7,3 +7,6 @@ class Edge:
 
     def __str__(self):
         return f"""{self.out_vertex}, {self.in_vertex}, {self.label}; """
+
+    def __eq__(self, other):
+        return self.label == other.label and self.in_vertex == other.in_vertex and self.out_vertex == other.out_vertex
