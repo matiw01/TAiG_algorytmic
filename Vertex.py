@@ -1,4 +1,6 @@
 from Edge import Edge
+
+
 class Vertex:
 
     def __init__(self, idx: int, label: str, out_edges=None, in_edges=None):
@@ -25,6 +27,9 @@ class Vertex:
         in_edges:  {str_in_edges}
         label:   {str(self.label)} 
         """
+
+    def __eq__(self, other):
+        return self.idx == other.idx and self.label == other.label and self.in_edges == other.in_edges and self.out_edges == other.out_edges
 
     def add_out_edge(self, edge: Edge):
         self.out_edges.append(edge)
