@@ -125,6 +125,25 @@ class Main:
                             graph.add_edge(Edge(other_vertex_id, right_vertex_id, added_edge[2]))
 
 
+# 0 1
+# 0 2
+# 0 3
+# 1 4
+# 2 5
+# 2 6
+# 2 7
+# 3 8
+# 1 9
+# 1 10
+# 3 11
+# 1 12
+# 3 13
+# 1 14
+# 3 15
+# 1 16
+# 3 17
+# 3 18
+
 # Embedded transform input format:
 # """edge_label, direction, index_left; ver_right_label, ver_g_label, edge_label, direction;
 # edge_label, direction, index_left; ver_right_label, ver_g_label, edge_label, direction;"""

@@ -5,7 +5,7 @@ from PIL import ImageTk
 
 from main import Main
 
-DEFAULT_GRAPH_INPUT_STRING = "1, a; 2, x; 3, N; 4, asvae;\n1, 3, s; 1, 4, M; 2, 2, ab; 4, 2, :D; 2, 3, cds;"
+DEFAULT_GRAPH_INPUT_STRING = "1, A; 2, B; 3, C; 4, D;\n1, 3, s; 1, 4, xd; 2, 2, a; 4, 2, r; 2, 3, d;"
 
 HEIGHT = 700
 WIDTH = 1200
@@ -300,7 +300,7 @@ def main():
     entry_prod.grid(row=1, column=1, padx=5, pady=5)
 
     entry_graph = tk.Entry(apply_prod_frame, bg=FG_COLOR, width=25)
-    entry_graph.insert(tk.INSERT, "Graph indicies here")
+    entry_graph.insert(tk.INSERT, "1 1")
     entry_graph.grid(row=1, column=2, padx=5, pady=5)
 
     main_window.mainloop()
