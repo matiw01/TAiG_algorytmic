@@ -1,4 +1,5 @@
 from typing import List
+from copy import deepcopy
 
 from Edge import Edge
 from Graph import Graph
@@ -9,6 +10,7 @@ from Vertex import Vertex
 class Main:
     def __init__(self):
         self.graphs = []
+        self.prev_graphs = []
         self.productions = []
 
     def add_graph(self, graph: str, name: str):
@@ -16,6 +18,7 @@ class Main:
             Graph.parse(graph)[0],
             Graph.parse(graph)[1],
             name))
+        self.prev_graphs.append(deepcopy(self.graphs[-1]))
 
     def add_production(self, graph_l: str, name_l: str, graph_r: str, name_r: str, attachment: str):
         self.productions.append(Production(
@@ -33,7 +36,12 @@ class Main:
         if len(self.productions) > idx >= 0:
             self.productions[idx].draw()
 
-    def use_production(self, production: Production, graph: Graph, pointed_vertices: List[int]):
+
+    def use_production(self, production: Production, graph: Graph, pointed_vertexes: List[int], graph_number: int):
+        # storing previous version of the graph
+        self.prev_graphs[graph_number] = deepcopy(graph)
+
+
         graph.store()
 
         left_side_to_graph_vertex_id_map = dict()
