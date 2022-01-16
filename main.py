@@ -36,18 +36,16 @@ class Main:
         if len(self.productions) > idx >= 0:
             self.productions[idx].draw()
 
-
     def use_production(self, production: Production, graph: Graph, pointed_vertexes: List[int], graph_number: int):
         # storing previous version of the graph
         self.prev_graphs[graph_number] = deepcopy(graph)
 
-
         graph.store()
 
         left_side_to_graph_vertex_id_map = dict()
-        for i in range(0, len(pointed_vertices), 2):
-            left_side_to_graph_vertex_id_map[pointed_vertices[i]] = pointed_vertices[i + 1]
-        indexes_of_vertices_from_left_side_in_graph = set(left_side_to_graph_vertex_id_map.values())
+        for i in range(0, len(pointed_vertexes), 2):
+            left_side_to_graph_vertex_id_map[pointed_vertexes[i]] = pointed_vertexes[i + 1]
+        set(left_side_to_graph_vertex_id_map.values())
 
         right_side_to_graph_vertex_id_map = dict()
         indexes_of_vertices_from_right_side_in_graph = set()
@@ -75,7 +73,8 @@ class Main:
                 graph.add_vertex(vertex)
 
         left_side_edges = [edge for vertex in production.left_graph.vertices_dict.values() for edge in vertex.in_edges]
-        right_side_edges = [edge for vertex in production.right_graph.vertices_dict.values() for edge in vertex.in_edges]
+        right_side_edges = [edge for vertex in production.right_graph.vertices_dict.values() for edge in
+                            vertex.in_edges]
 
         # delete vertices, that are present on left side
         for edge in left_side_edges:
@@ -163,18 +162,18 @@ graphs = [(g_l1, "g_l1", g_r1, "g_r1"),
 embedment = [A1, A2, A3, A4]
 
 
-def default(M = None):
-    if M is None:
-        M = Main()
+def default(m=None):
+    if m is None:
+        m = Main()
     for i in range(len(graphs)):
-        M.add_production(graphs[i][0], graphs[i][1], graphs[i][2], graphs[i][3], embedment[i])
+        m.add_production(graphs[i][0], graphs[i][1], graphs[i][2], graphs[i][3], embedment[i])
     for i in range(len(graphs)):
         for j in range(2):
-            M.add_graph(graphs[i][j * 2], graphs[i][j * 2 + 1])
+            m.add_graph(graphs[i][j * 2], graphs[i][j * 2 + 1])
 
     # for i in range(len(M.productions)):
     #     M.show_production(i)
-    return M
+    return m
 
 
 M = default()

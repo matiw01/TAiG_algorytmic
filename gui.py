@@ -1,10 +1,8 @@
 import tkinter as tk
 import tkinter.ttk as ttk
-from turtle import back
 
 from PIL import ImageTk
 
-from Graph import Graph
 from main import Main
 
 DEFAULT_GRAPH_INPUT_STRING = "1, a; 2, x; 3, N; 4, asvae;\n1, 3, s; 1, 4, M; 2, 2, ab; 4, 2, :D; 2, 3, cds;"
@@ -161,6 +159,7 @@ def apply_production(show_graph_frame, backend, prod_num, verticies):
 # MAIN WINDOW
 current_graph = 0
 
+
 def basics(M, prod_frame):
     A1 = """s, out, 1; A, N, s, out; N, N, -n, in; N, N, n, in;"""
     A2 = """s, out, 1; A, N, s, out; M, N, -a, in;
@@ -192,7 +191,8 @@ am, out, 1; A, M, am, out; I, M, c, in;"""
             M.add_graph(grafs[i][j * 2], grafs[i][j * 2 + 1])
     for i in range(len(grafs)):
         M.add_production(grafs[i][0], grafs[i][1], grafs[i][2], grafs[i][3], osadzenia[i])
-        add_production_to_list(prod_frame, M.graphs[i*2], M.graphs[i*2+1], osadzenia[i], i)
+        add_production_to_list(prod_frame, M.graphs[i * 2], M.graphs[i * 2 + 1], osadzenia[i], i)
+
 
 def main():
     # API FOR BACKEND
@@ -226,7 +226,7 @@ def main():
 
     graph_frame = tk.Frame(main_window, height=HEIGHT, width=2 * WIDTH / 3, bg=FG_COLOR)
     graph_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-    graph_frame.propagate(0)
+    graph_frame.propagate(False)
 
     # BUTTONS TO OPEN NEW WINDOWS
     s = ttk.Style()
@@ -234,7 +234,7 @@ def main():
 
     window_buttons = tk.Frame(graph_frame, height=40, bg=BG_COLOR)
     window_buttons.pack(side=tk.TOP, fill=tk.X)
-    window_buttons.propagate(0)
+    window_buttons.propagate(False)
 
     graph_input_btn = ttk.Button(window_buttons, text="Graph input", width=20,
                                  command=lambda: graph_input_window(backend), style="my.TButton")
@@ -251,12 +251,12 @@ def main():
     # CHOOSE GRAPH TO SHOW AND APPLY PRODUCTION
     apply_frame = tk.Frame(graph_frame, height=80, bg=BG_COLOR)
     apply_frame.pack(side=tk.BOTTOM, fill=tk.X)
-    apply_frame.propagate(0)
+    apply_frame.propagate(False)
 
     # CHANGE SHOWN GRAPH
     change_graph_frame = tk.Frame(apply_frame, bg=BG_COLOR)
     change_graph_frame.pack(side=tk.LEFT)
-    change_graph_frame.propagate(0)
+    change_graph_frame.propagate(False)
 
     prod_label = tk.Label(change_graph_frame, text="Choose graph", bg=BG_COLOR, fg=FG_COLOR, font=FONT)
     prod_label.grid(row=0, column=0, columnspan=3, pady=5)
@@ -286,7 +286,7 @@ def main():
     # APPLY PRODUCTION
     apply_prod_frame = tk.Frame(apply_frame, bg=BG_COLOR)
     apply_prod_frame.pack(side=tk.RIGHT)
-    apply_prod_frame.propagate(0)
+    apply_prod_frame.propagate(False)
 
     prod_label = tk.Label(apply_prod_frame, text="Apply production", bg=BG_COLOR, fg=FG_COLOR, font=FONT)
     prod_label.grid(row=0, column=0, columnspan=3, pady=5)
