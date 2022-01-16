@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+from turtle import back
 
 from PIL import ImageTk
 
@@ -153,7 +154,7 @@ def apply_production(show_graph_frame, backend, prod_num, verticies):
     else:
         return
 
-    backend.use_production(production, graph, verticies)
+    backend.use_production(production, graph, verticies, current_graph)
     show_graph(show_graph_frame, backend, current_graph)
 
 
@@ -268,13 +269,18 @@ def main():
     change_entry.grid(row=1, column=1, padx=5, pady=5)
 
     # REVERSE GRAPH
+    def show_previous_graph():
+        global current_graph
+        backend.graphs[current_graph] = backend.prev_graphs[current_graph]
+        show_graph(show_graph_frame, backend, current_graph)
+
     reverse_frame = tk.Frame(apply_frame, bg=BG_COLOR)
     reverse_frame.pack(side=tk.LEFT, padx=20)
 
     reverse_label = tk.Label(reverse_frame, text="Reverse graph to previous state", bg=BG_COLOR, fg=FG_COLOR, font=FONT)
     reverse_label.grid(row=0, column=0, pady=5)
     reverse_button = ttk.Button(reverse_frame, text="Reverse", width=10, style="my.TButton",
-                                command=lambda: 1)  # TODO
+                                command=show_previous_graph)
     reverse_button.grid(row=1, column=0, pady=5)
 
     # APPLY PRODUCTION
