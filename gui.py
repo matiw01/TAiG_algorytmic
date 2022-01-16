@@ -43,7 +43,7 @@ def prod_input_window(backend, prod_frame):
     prod_text_box.grid(row=5, column=0, padx=10, pady=10)
 
     def add_prod(prod_frame):
-        # walidacja
+        # validation
         left = left_text_box.get("1.0", 'end-1c')
         right = right_text_box.get("1.0", 'end-1c')
         prod = prod_text_box.get("1.0", 'end-1c')
@@ -57,7 +57,7 @@ def prod_input_window(backend, prod_frame):
         # label = tk.Label(frame, text="Production added", bg=BG_COLOR, fg=FG_COLOR, font=(FONT, 18))
         # label.pack(fill=tk.BOTH, expand=True)
 
-        l_graph, r_graph = backend.productions[-1].get_rl_graphs()
+        l_graph, r_graph = backend.productions[-1].get_lr_graphs()
         add_production_to_list(prod_frame, l_graph, r_graph, prod, len(backend.productions) - 1)
 
     s = ttk.Style()
@@ -80,7 +80,7 @@ def graph_input_window(backend):
     graph_text_box.grid(row=2, column=0, padx=10, pady=10)
 
     def add_graph():
-        # walidacja
+        # validation
         graph = graph_text_box.get("1.0", 'end-1c')
         backend.add_graph(graph, "graph")
 
