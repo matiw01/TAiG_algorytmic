@@ -54,5 +54,5 @@ Przykład:
 - Mateusz Więcek - przechowywanie grafów oraz produkcji
 - Tobasz Szulc - stosowanie transformacji
 - Jakub Radek - stosowanie transformacji
-- Damian Tworek - parsowanie notacji
+- Damian Tworek - parsowanie notacji, refactoring kodu
 - Łukasz Wala - interfejs graficzny, wizualizacja grafu
