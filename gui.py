@@ -186,14 +186,6 @@ def prod_input_window(backend, prod_frame):
         prod = prod_text_box.get("1.0", 'end-1c')
         backend.add_production(left, "left", right, "right", prod)
 
-        # window = tk.Toplevel()
-        # window.title("Production added")
-        # frame = tk.Frame(window, bg=BG_COLOR, width=300, height=100)
-        # frame.pack(fill=tk.BOTH, expand=True)
-        # frame.propagate(0)
-        # label = tk.Label(frame, text="Production added", bg=BG_COLOR, fg=FG_COLOR, font=(FONT, 18))
-        # label.pack(fill=tk.BOTH, expand=True)
-
         l_graph, r_graph = backend.productions[-1].get_lr_graphs()
         add_production_to_list(prod_frame, l_graph, r_graph, prod, len(backend.productions) - 1)
 
@@ -220,14 +212,6 @@ def graph_input_window(backend):
         # validation
         graph = graph_text_box.get("1.0", 'end-1c')
         backend.add_graph(graph, "graph")
-
-        # window = tk.Toplevel()
-        # window.title("Graph added")
-        # frame = tk.Frame(window, bg=BG_COLOR, width=300, height=100)
-        # frame.pack(fill=tk.BOTH, expand=True)
-        # frame.propagate(0)
-        # label = tk.Label(frame, text="Graph added", bg=BG_COLOR, fg=FG_COLOR, font=(FONT, 18))
-        # label.pack(fill=tk.BOTH, expand=True)
 
     s = ttk.Style()
     s.configure("my.TButton", font=(FONT, 12))
@@ -272,17 +256,11 @@ def show_graph(show_graph_frame, backend, number):
         return
 
     graph_data = graph.get_graph(FG_COLOR)
-    #img = ImageTk.PhotoImage(data=graph_data)
 
     for widget in show_graph_frame.winfo_children():
         widget.destroy()
 
     app = Zoom_Advanced(show_graph_frame, image_data=graph_data)
-
-    # label = tk.Label(show_graph_frame, image=img, bg=FG_COLOR)
-    # label.photo = img
-    # label.pack(fill=tk.BOTH, expand=True)
-    #app.pack()
 
 
 def apply_production(show_graph_frame, backend, prod_num, verticies):
@@ -360,7 +338,7 @@ def main():
 
     prod_frame = tk.Frame(prod_canvas, bg=PROD_BG_COLOR)
     prod_frame.pack()
-    #basics(backend, prod_frame)
+    basics(backend, prod_frame)
 
     prod_canvas.create_window((0, 0), window=prod_frame, anchor="nw")
 
