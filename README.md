@@ -4,7 +4,23 @@ Program umożliwa zapisywanie grafów oraz produkcji w postaci podejścia algory
 Jest możliwe podanie kilku grafów, a następnie wybór do którego z nich dana produkcja ma zostać zastosowana.
 Po zastosowaniu niezamierzonej produkcji istnieje możliwość powrotu grafu do poprzedniego stanu (**REVERSE**).
 
+Użyte technologie:
+- całość programu napisana w języku *Python*
+- do wizualizacji grafu użyty został program *Graphviz* (przy użyciu jego API w Pythonie)
+- interfejs graficzny stworzony w *Tkinter*
+
 ---
+## Uruchamianie
+Do uruchomienia programu potrzebny jest [interpreter Pythona](https://www.python.org/downloads/), [Graphviz](https://graphviz.org/download/), jego pakiet do integracji z Pythonem, który można pobrać przy pomocy narzędzia *pip*, oraz pakiet *tkinter*
+```
+[user@$host ~]$ pip3 install graphviz
+[user@$host ~]$ pip3 install tk
+```
+Program można uruchomić przez komendę
+```
+[user@$host ~]$ python3 filepath
+```
+gdzie _filepath_ to ścieżka do pliku gui.py
 
 ## Dodawanie grafu (**Add graph**):
 ```
